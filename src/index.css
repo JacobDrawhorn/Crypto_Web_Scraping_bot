@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Cyberpunk Animations */
+@keyframes neon-pulse {
+  0%, 100% { 
+    text-shadow: 0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000,
+                0 0 40px #ff0000;
+  }
+  50% { 
+    text-shadow: 0 0 20px #ff3333,
+                0 0 30px #ff3333,
+                0 0 40px #ff3333,
+                0 0 50px #ff3333,
+                0 0 60px #ff3333;
+  }
+}
+
+@keyframes cyber-glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes cyber-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@layer base {
+  body {
+    @apply bg-black text-red-500;
+    background: linear-gradient(
+      135deg,
+      #000000 0%,
+      #1a0000 25%,
+      #0a0000 50%,
+      #1a0000 75%,
+      #000000 100%
+    );
+    background-size: 400% 400%;
+    animation: cyber-gradient 15s ease infinite;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-red-900 rounded-full;
+    border: 2px solid #000;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-red-700;
+  }
+}
+
+@layer components {
+  .cyber-card {
+    @apply bg-black/60 backdrop-blur-xl border border-red-900/30 rounded-lg 
+           hover:scale-[1.02] transition-all duration-300 relative overflow-hidden;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+  }
+
+  .cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ff0000, transparent);
+    animation: neon-pulse 2s infinite;
+  }
+
+  .cyber-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      transparent 50%,
+      rgba(255, 0, 0, 0.025) 50%
+    );
+    background-size: 100% 4px;
+    animation: scan-line 4s linear infinite;
+    pointer-events: none;
+  }
+
+  .cyber-card:hover {
+    border-color: rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+  }
+
+  .floating-icon {
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+  }
+
+  .neon-text {
+    @apply font-bold;
+    color: #ff0000;
+    text-shadow: 0 0 5px #ff0000,
+                 0 0 10px #ff0000,
+                 0 0 15px #ff0000;
+    animation: neon-pulse 2s infinite;
+  }
+
+  .glitch-text {
+    position: relative;
+    animation: cyber-glitch 0.5s infinite;
+    text-shadow: 2px 2px #ff0000;
+  }
+
+  .neon-border {
+    @apply border border-red-600/50 relative overflow-hidden;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+  }
+
+  .neon-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid transparent;
+    border-radius: inherit;
+    background: linear-gradient(45deg, #ff0000, transparent, #ff0000);
+    animation: cyber-gradient 3s linear infinite;
+    z-index: -1;
+  }
+
+  .progress-bar {
+    @apply h-2 rounded-full overflow-hidden bg-red-900/20 relative;
+  }
+
+  .progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 0, 0, 0.2),
+      transparent
+    );
+    animation: cyber-gradient 2s linear infinite;
+  }
+
+  .progress-bar-fill {
+    @apply h-full transition-all duration-500;
+    background: linear-gradient(90deg, #ff0000, #ff3333);
+    box-shadow: 0 0 10px #ff0000;
+  }
+
+  .cyber-button {
+    @apply px-4 py-2 rounded-lg border border-red-600/50 
+           text-red-500 font-medium relative overflow-hidden
+           hover:text-red-400 transition-colors;
+    background: linear-gradient(45deg, transparent, rgba(255, 0, 0, 0.1), transparent);
+  }
+
+  .cyber-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 0, 0, 0.2),
+      transparent
+    );
+    transition: 0.5s;
+  }
+
+  .cyber-button:hover::before {
+    left: 100%;
+  }
+
+  .cyber-grid {
+    @apply grid gap-6;
+    background-image: radial-gradient(
+      rgba(255, 0, 0, 0.1) 1px,
+      transparent 1px
+    );
+    background-size: 20px 20px;
+  }
+}
